@@ -1,0 +1,34 @@
+/*
+ * neo7m.h
+ *
+ *  Created on: Feb 2, 2024
+ *      Author: mustafa 'pxsty' kok
+ */
+#ifndef PXSTYNEO7M_H_
+#define PXSTYNEO7M_H_
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+
+#define _io static
+
+/****************USR functions******************/
+
+int readData(char nmea[1024]); // Reading RMC data
+
+int getHours(void);
+int getMinutes(void);
+int getSeconds(void);
+
+int getLatitude(void);
+int getLongitude(void);
+
+int getSpeed(int type);
+
+int getDay(void);
+int getMonth(void);
+int getYear(void);
+
+/****************USR functions******************/
+
+#endif
