@@ -2,7 +2,7 @@
  * neo7m.h
  *
  *  Created on: Feb 2, 2024
- *      Author: mustafa 'pxsty' kok
+ *      Author: kokmu
  */
 #ifndef PXSTYNEO7M_H_
 #define PXSTYNEO7M_H_
@@ -20,8 +20,8 @@ int getHours(void);
 int getMinutes(void);
 int getSeconds(void);
 
-int getLatitude(void);
-int getLongitude(void);
+float getLatitude(void);
+float getLongitude(void);
 
 int getSpeed(int type);
 

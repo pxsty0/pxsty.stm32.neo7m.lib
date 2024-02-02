@@ -1,25 +1,25 @@
-#include "pxstyneo7m.h"
+#include <neo7m.h>
 _io uint8_t nmeaMsg[1024];
 
-_io int utcTime;
+_io int utcTimex;
 
-_io int hours;
-_io int minutes;
-_io int seconds;
+_io int hoursx;
+_io int minutesx;
+_io int secondsx;
 
 _io float latitudex;
 _io float longitudex;
 
-_io float speed;
+_io float speedx;
 
-_io int date;
+_io int datex;
 
-_io int day;
-_io int month;
-_io int year;
+_io int dayx;
+_io int monthx;
+_io int yearx;
 
 _io int proccesingData(void);
-_io int clearVars(void);
+// _io int clearVars(void);
 
 _io int proccesingData(void)
 {
@@ -56,22 +56,26 @@ _io int proccesingData(void)
                 }
                 if (tokenIndex == 10)
                 {
-                    utcTime = atoi(buffers[1]);
+                    utcTimex = atoi(buffers[1]);
 
-                    hours = (utcTime / 10000) + 3;
-                    minutes = (utcTime % 10000) / 100;
-                    seconds = utcTime % 100;
+                    hoursx = ((utcTimex / 10000) + 3) % 24;
+                    minutesx = (utcTimex % 10000) / 100;
+                    secondsx = utcTimex % 100;
 
                     latitudex = atof(buffers[3]) / 100.0;
                     longitudex = atof(buffers[5]) / 100.0;
 
-                    speed = atof(buffers[7]) * 1.852 / 3600.0;
+                    speedx = atof(buffers[7]) * 1.852 / 3600.0;
 
-                    date = atoi(buffers[9]);
+                    datex = atoi(buffers[8]);
 
-                    day = date / 10000;
-                    month = (date % 10000) / 100;
-                    year = date % 100;
+                    if (hoursx <= 2)
+                        dayx = (datex / 10000) + 1;
+                    else
+                        dayx = datex / 10000;
+
+                    monthx = (datex % 10000) / 100;
+                    yearx = (datex % 100) + 2000;
                 }
                 else
                     status = 1;
@@ -87,29 +91,29 @@ _io int proccesingData(void)
 
     return status;
 }
-
+/*
 _io int clearVars(void)
 {
-    utcTime = 0;
+    utcTimex = 0;
 
-    hours = 0;
-    minutes = 0;
-    seconds = 0;
+    hoursx = 0;
+    minutesx = 0;
+    secondsx = 0;
 
     latitudex = 0;
     longitudex = 0;
 
-    speed = 0;
+    speedx = 0;
 
-    date = 0;
+    datex = 0;
 
-    day = 0;
-    month = 0;
-    year = 0;
+    dayx = 0;
+    monthx = 0;
+    yearx = 0;
 
     return 1;
 }
-
+*/
 int readData(char nmea[1024])
 {
     strcpy((char *)nmeaMsg, nmea);
@@ -118,40 +122,40 @@ int readData(char nmea[1024])
 
 int getHours(void)
 {
-    return hours;
+    return hoursx;
 };
 int getMinutes(void)
 {
-    return minutes;
+    return minutesx;
 };
 int getSeconds(void)
 {
-    return seconds;
+    return secondsx;
 };
 
-int getLatitude(void)
+float getLatitude(void)
 {
     return latitudex;
 };
-int getLongitude(void)
+float getLongitude(void)
 {
     return longitudex;
 };
 
 int getSpeed(int type)
 {
-    return speed;
+    return speedx;
 };
 
 int getDay(void)
 {
-    return day;
+    return dayx;
 };
 int getMonth(void)
 {
-    return month;
+    return monthx;
 };
 int getYear(void)
 {
-    return year;
+    return yearx;
 };
